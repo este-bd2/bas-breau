@@ -6,6 +6,7 @@ import Escalier from '../components/Escalier.astro';
 import Voile from '../components/Voile.astro';
 import Panneau from '../components/Panneau.astro';
 import Appel from '../components/Appel.astro';
+import Etoiles from '../components/Etoiles.astro';
 import { chambres } from '../data/sejours';
 import { etablissement } from '../data/site';
 import { REGISTRE } from '../lib/oeuvres';
@@ -46,6 +47,9 @@ const schema = [
         titre="De la Classique à la Suite, le même soin"
         texte="Descriptions, surfaces et équipements publiés par l’établissement sur son site officiel. Les prix sont ceux du jour du relevé (08/08/2026), à partir de."
       />
+      <p class="rang">
+        <Etoiles /> Hôtel classé cinq étoiles par l’établissement.
+      </p>
       <div class="chambres-liste">
         {chambres.map((c) => (
           <article class="casier-chambre" id={c.slug}>

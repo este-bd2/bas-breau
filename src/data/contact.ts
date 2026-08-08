@@ -1,6 +1,7 @@
 // FORMULAIRE DE CONTACT — descriptif du formulaire. Destinataire : variable
 // CONTACT_TO (voir api/contact.mjs) — jamais d'adresse en dur dans le code.
 // Plusieurs destinataires acceptés (séparés par des virgules), format validé.
+import { etablissement } from './site';
 
 export const FORMULAIRE = {
   motif: [
@@ -21,7 +22,7 @@ export const FAQ = [
   {
     question: 'Comment réserver une chambre ?',
     reponse:
-      'Deux moyens : le moteur de réservation en ligne de l’hôtel (bouton « Réserver en ligne », visible en tête de site), ou le téléphone au +33 1 64 64 06 24.'
+      `Deux moyens : le moteur de réservation en ligne de l’hôtel (bouton « Réserver en ligne », visible en tête de site), ou le téléphone au ${etablissement.contact.telephonePrincipal}.`
   },
   {
     question: 'Le restaurant est-il ouvert ?',

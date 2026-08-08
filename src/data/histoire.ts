@@ -11,8 +11,8 @@ export const histoire = {
   ],
   periode: [
     {
-      annee: 'XIXe siècle',
-      titre: 'L’auberge Siron',
+      annee: '1862',
+      titre: 'L’auberge du bourg',
       texte: 'Le relais de chasse devient l’auberge de Monsieur Siron. Robert Louis Stevenson, l’auteur de « L’Île au Trésor », y séjourne et y écrit les notes qui nourriront « Forest Notes ». C’est aussi là qu’il rencontre sa femme, Lady Osborne.'
     },
     {

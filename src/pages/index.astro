@@ -7,6 +7,7 @@ import Voile from '../components/Voile.astro';
 import Panneau from '../components/Panneau.astro';
 import Ruban from '../components/Ruban.astro';
 import Appel from '../components/Appel.astro';
+import Etoiles from '../components/Etoiles.astro';
 import { etablissement } from '../data/site';
 import { PRESTATIONS } from '../data/prestations';
 import { chambres } from '../data/sejours';
@@ -70,6 +71,7 @@ const schema = [
     <span class="hero__marque" aria-hidden="true">Bas-Bréau</span>
     <div class="hero__voile"></div>
     <div class="hero__texte">
+      <Etoiles clair />
       <p class="inscription inscription--claire">Hôtellerie du Bas-Bréau</p>
       <h1>À Barbizon, l’auberge des peintres au bord de la forêt de Fontainebleau</h1>
       <p class="hero__sous">{etablissement.sousTitre}</p>

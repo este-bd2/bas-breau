@@ -21,18 +21,21 @@ export const etablissement = {
   legal: {
     raisonSociale: 'HOTELLERIE DU BAS BREAU', // [S1] mentions légales + [S2]
     formeJuridique: 'SAS', // [S1] mentions légales + [S2]
-    capital: '2 947 455,00 €', // [S1] mentions légales (paru au RCS Melun, décision du 15/05/2023, société.com)
+    capital: '2 947 455,00 €', // [S1] mentions légales (paru au RCS Melun, décision du 15/05/2023)
     rcs: 'Melun B 785 750 696', // [S1] mentions légales
     siren: '785 750 696', // [S1] + [S2]
     siret: '785 750 696 000 11', // [S1] + [S2]
     tva: 'FR 047 857 506 96', // [S1] + [S2]
     naf: '5510Z — Hôtels et hébergement similaire', // [S2]
-    creation: '1957', // [S2] date de création INSEE : 01/01/1957
+    creation: '1862', // [S3] l'ancien site indique 1862 — conservé tel quel (décision client 08/08/2026)
     effectif: '10 à 19 salariés', // [S2] tranche INSEE 2023
-    representant: 'Katerine Wu, Présidente', // [S1] mentions légales + [S2] "Président de SAS"
+    representant: 'Katerine Wu, Présidente', // [S1] mentions légales + [S2]
     dpo: 'Katerine Wu, Présidente', // [S1] mentions légales (responsable des données)
     geocode: { lat: '48.444862055', lon: '2.609713985' } // [S2] coordonnées Insee du siège
   },
+
+  // [S3] l'ancien site annonce 5 étoiles — consigné tel quel (décision client 08/08/2026)
+  etoiles: 5,
 
   contact: {
     adresse: {
@@ -41,7 +44,7 @@ export const etablissement = {
       ville: 'Barbizon',
       pays: 'France'
     }, // [S1] + [S3], identique des deux côtés
-    telephonePrincipal: '+33 1 64 64 06 24', // [S1] en-tête/contact/footer du site officiel — [À CONFIRMER] : figure aussi sous forme décomposée au numéro 01 60 66 40 05 dans le pied et les mentions du même site ; le 01 64 64 06 24 a été retenu car il apparaît partout côté contact direct
+    telephonePrincipal: '+33 1 60 66 40 05', // [S3] ancien site — conservé tel quel (décision client 08/08/2026)
     // [À CONFIRMER] basbreau@wanadoo.fr (ancien site [S3], carte de visite) — non retenu en affichage : l'adresse officielle actuelle a été préférée
     email: 'contact@hotelleriedubasbreau.com', // [S1] contact/réservation officiels
     reseaux: {
