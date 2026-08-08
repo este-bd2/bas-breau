@@ -1,0 +1,86 @@
+---
+// Détente & loisirs — le parc, la piscine, la forêt : tout ce qui est publié
+// par l'établissement [S1] et vérifiable sur les fiches publiques [S4].
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Panneau from '../components/Panneau.astro';
+import Appel from '../components/Appel.astro';
+import { ACCES } from '../data/acces';
+import { REGISTRE } from '../lib/oeuvres';
+
+const schema = [
+  {
+    '@type': 'TouristAttraction',
+    name: 'Le domaine du Bas-Bréau — parc, piscine',
+    url: 'https://bas-breau.com/detente-et-loisirs',
+    description:
+      'Un parc arboré de 2 hectares, une piscine chauffée et la forêt de Fontainebleau à deux pas.'
+  }
+];
+---
+
+<Canevas
+  titre="Détente & loisirs — Hôtellerie du Bas-Bréau"
+  description="Le parc de 2 hectares, la piscine chauffée, les villages et la forêt de Fontainebleau : détente et loisirs aux portes de l’Hôtellerie du Bas-Bréau."
+  chemin="/detente-et-loisirs"
+  schema={schema}
+>
+  <Escalier
+    surtitre="Séjourner"
+    titre="Détente & loisirs"
+    image={REGISTRE['hostellerie-bas-breau-jardins-fleurs.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <div class="duo duo--inverse">
+        <Panneau
+          src={REGISTRE['hostellerie-bas-breau-jardins-fleurs.jpg']}
+          alt="Parc ombragé de deux hectares de l’Hôtellerie du Bas-Bréau"
+          paresseuse
+        />
+        <div class="duo__texte">
+          <Voile
+            surtitre="Sur place"
+            titre="Deux hectares pour un temps suspendu"
+          />
+          <p>
+            Le domaine s’étend sur un parc arboré de deux hectares — une mesure
+            publiée sur le site officiel de l’établissement. La piscine
+            chauffée est accessible aux hôtes de la maison.
+          </p>
+          <p>
+            L’hôtel est ouvert toute l’année : l’hiver se passe au coin du
+            feu, l’été au bord de l’eau du parc.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <Voile
+        surtitre="À deux pas"
+        titre="La forêt immédiate"
+        texte="Tout ce qui entoure la maison, décrit par l’établissement et la documentation publique."
+      />
+      <div class="officine">
+        {ACCES.environs.map((env) => (
+          <article class="officine__entree">
+            <h3>{env.titre}</h3>
+            <p>{env.texte}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <Appel
+      titre="Garder une trace"
+      texte="La forêt se garde aussi dans l’assiette et dans les chambres — la maison est ouverte toute l’année."
+      bouton={{
+        libelle: 'Réservations',
+        href: '/tarifs'
+      }}
+    />
+  </div>
+</Canevas>

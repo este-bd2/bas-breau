@@ -1,0 +1,18 @@
+---
+// Ruban — bandeau défilant des mentions (transform uniquement, respecte
+// prefers-reduced-motion via la feuille globale).
+interface Props {
+  mots: string[];
+}
+
+const { mots } = Astro.props;
+const enfilade = [...mots, ...mots];
+---
+
+<div class="ruban" aria-hidden="true">
+  <div class="ruban__piste">
+    {enfilade.map((mot) => (
+      <span class="ruban__motif">{mot}</span>
+    ))}
+  </div>
+</div>

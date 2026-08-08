@@ -1,0 +1,25 @@
+---
+// 404 — page introuvable, avec retour visible vers l'accueil et la recherche.
+import Canevas from '../layouts/Canevas.astro';
+---
+
+<Canevas
+  titre="Page introuvable — Hôtellerie du Bas-Bréau"
+  description="Cette page n’existe pas sur le site de l’Hôtellerie du Bas-Bréau."
+  chemin="/404"
+>
+  <div class="spectateur spectateur--mince">
+    <section class="tranche">
+      <p class="inscription">Erreur 404</p>
+      <h1>Cette page s’est égarée dans le parc</h1>
+      <p>
+        L’adresse demandée n’existe pas ou a été déplacée. L’accueil du site vous
+        retrouvera plus sûrement.
+      </p>
+      <p>
+        <a class="bouton bouton--sienne" href="/">Retour à l’accueil</a>{' '}
+        <a class="bouton" href="/contact">Nous écrire</a>
+      </p>
+    </section>
+  </div>
+</Canevas>

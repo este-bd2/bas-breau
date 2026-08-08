@@ -1,0 +1,89 @@
+---
+// Chambres & suites — les quatre gammes publiées par l'établissement [S1],
+// avec leurs équipements, surfaces publiées et prix « à partir de ».
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Panneau from '../components/Panneau.astro';
+import Appel from '../components/Appel.astro';
+import { chambres } from '../data/sejours';
+import { etablissement } from '../data/site';
+import { REGISTRE } from '../lib/oeuvres';
+
+const schema = [
+  {
+    '@type': 'LodgingBusiness',
+    name: `${etablissement.nom} — Chambres & suites`,
+    url: 'https://bas-breau.com/chambres-suites',
+    telephone: etablissement.contact.telephonePrincipal,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: etablissement.contact.adresse.voie,
+      postalCode: etablissement.contact.adresse.codePostal,
+      addressLocality: etablissement.contact.adresse.ville,
+      addressCountry: 'FR'
+    }
+  }
+];
+---
+
+<Canevas
+  titre="Chambres & suites de l’Hôtellerie du Bas-Bréau"
+  description="Chambre Classique, Supérieure, Deluxe, Suite & Junior Suite à Barbizon : surfaces et équipements publiés par l’hôtel, prix à partir de 130 € par nuit."
+  chemin="/chambres-suites"
+  schema={schema}
+>
+  <Escalier
+    surtitre="Séjourner"
+    titre="Chambres & suites"
+    image={REGISTRE['hotel-bas-breau-barizon-chambre-suite-1.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <Voile
+        surtitre="Les quatre gammes"
+        titre="De la Classique à la Suite, le même soin"
+        texte="Descriptions, surfaces et équipements publiés par l’établissement sur son site officiel. Les prix sont ceux du jour du relevé (08/08/2026), à partir de."
+      />
+      <div class="chambres-liste">
+        {chambres.map((c) => (
+          <article class="casier-chambre" id={c.slug}>
+            <div class="casier-chambre__image">
+              <Panneau src={REGISTRE[c.images[0]]} alt={c.nom} paresseuse tailles="(max-width: 860px) 92vw, 560px" />
+            </div>
+            <div class="casier-chambre__details">
+              <div class="casier-chambre__entete">
+                <div>
+                  <h2>{c.nom}</h2>
+                  <p class="casier-chambre__repere">{c.personnes}</p>
+                </div>
+                <p class="casier-chambre__prix">dès {c.prixDepuis}</p>
+              </div>
+              {c.texte.map((p) => (
+                <p>{p}</p>
+              ))}
+              <h3>Équipements</h3>
+              <ul class="touches">
+                {c.equipements.map((e) => (
+                  <li>{e}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <Appel
+      titre="Réserver cette chambre"
+      texte="Sur le moteur officiel de l’hôtel : disponibilités et tarifs du jour, sans engagement avant confirmation."
+      bouton={{
+        libelle: 'Voir les disponibilités',
+        href: etablissement.moteurReservation,
+        externe: true
+      }}
+      secondaire={{ libelle: 'Les tarifs publiés', href: '/tarifs' }}
+    />
+  </div>
+</Canevas>

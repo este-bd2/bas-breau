@@ -1,0 +1,50 @@
+﻿---
+// Atlas — contenu du <head> : title, description, canonical, Open Graph,
+// Twitter et JSON-LD (un script par schéma).
+import { etablissement } from '../data/site';
+
+interface Props {
+  titre: string;
+  description: string;
+  chemin: string;
+  schema?: Record<string, unknown>[];
+}
+
+const { titre, description, chemin, schema = [] } = Astro.props;
+
+const domaineBase = 'https://bas-breau.com';
+const urlCanonique = domaineBase + (chemin === '/' ? '/' : chemin);
+const titreComplet = titre.includes(etablissement.nom)
+  ? titre
+  : `${titre} — ${etablissement.nom}`;
+const descriptionBrève =
+  description.length > 158 ? description.slice(0, 150).trimEnd() + '…' : description;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{titreComplet}</title>
+<meta name="description" content={descriptionBrève} />
+<link rel="canonical" href={urlCanonique} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:site_name" content={etablissement.nom} />
+<meta property="og:title" content={titreComplet} />
+<meta property="og:description" content={descriptionBrève} />
+<meta property="og:url" content={urlCanonique} />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={titreComplet} />
+<meta name="twitter:description" content={descriptionBrève} />
+
+{schema.map(
+  (objet) =>
+    objet['@type'] && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify({ '@context': 'https://schema.org', ...objet })}
+      />
+    )
+)}

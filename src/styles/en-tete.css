@@ -1,0 +1,414 @@
+/* ============================================================
+   BAS-BRÉAU — complements : en-tête, voile, actions d'appel.
+   ============================================================ */
+
+/* ---------- En-tête ---------- */
+.chapeau {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: rgba(243, 237, 221, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ligne);
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem clamp(1.1rem, 4vw, 2.6rem);
+}
+
+.chapeau__marque {
+  text-decoration: none;
+  display: grid;
+  line-height: 1.1;
+}
+
+.chapeau__nom {
+  font-family: var(--plume);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.chapeau__surnom {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--sienne-profonde);
+}
+
+.chapeau__nav {
+  display: none;
+  gap: 1.1rem;
+  align-items: center;
+  justify-content: end;
+}
+
+.chapeau__nav > a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.97rem;
+  white-space: nowrap;
+}
+
+.chapeau__groupe {
+  position: relative;
+}
+
+.chapeau__groupe > summary {
+  list-style: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.97rem;
+  white-space: nowrap;
+}
+
+.chapeau__groupe > summary::-webkit-details-marker {
+  display: none;
+}
+
+.chapeau__groupe > summary::after {
+  content: ' ▼';
+  font-size: 0.62em;
+  color: var(--sienne);
+}
+
+.chapeau__groupe[open] > summary::after {
+  content: ' ▲';
+}
+
+.chapeau__volet {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  min-width: 210px;
+  background: var(--veille);
+  border: 1px solid var(--ligne);
+  padding: 0.7rem;
+  display: grid;
+  gap: 0.15rem;
+  box-shadow: 0 22px 42px rgba(20, 26, 21, 0.16);
+}
+
+.chapeau__volet a {
+  padding: 0.45rem 0.8rem;
+  text-decoration: none;
+  border-radius: var(--rayon-papier);
+  font-size: 0.94rem;
+}
+
+.chapeau__volet a:hover {
+  background: var(--papier-deux);
+}
+
+.chapeau__actions {
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.chapeau__tel {
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .chapeau__nav {
+    display: flex;
+  }
+
+  .chapeau__actions {
+    display: flex;
+  }
+
+  .chapeau .nav-mobile {
+    display: none;
+  }
+}
+
+/* ---------- Voile (en-tête de section) ---------- */
+.voile {
+  margin-bottom: clamp(1.8rem, 5vw, 3.2rem);
+}
+
+.voile--centre {
+  text-align: center;
+}
+
+.voile--centre .inscription {
+  display: block;
+}
+
+.voile--centre .traite {
+  margin-inline: auto;
+}
+
+.voile--clair h2 {
+  color: var(--veille);
+}
+
+.voile__texte {
+  max-width: 62ch;
+  font-size: 1.06rem;
+}
+
+.voile--centre .voile__texte {
+  margin-inline: auto;
+}
+
+/* ---------- Actions du bandeau d'appel ---------- */
+.appel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: start;
+}
+
+@media (min-width: 900px) {
+  .appel__actions {
+    justify-content: end;
+  }
+}
+
+/* ---------- Petit chemin de citations ---------- */
+.pragma {
+  max-width: 34ch;
+  font-family: var(--plume);
+  font-style: italic;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.35;
+}
+
+/* ---------- Carte minimum pour l'adresse ---------- */
+.coordonnees {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.coordonnees a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ---------- Navigation mobile (details) ---------- */
+.nav-mobile {
+  position: relative;
+  justify-self: end;
+}
+
+.nav-mobile > summary {
+  list-style: none;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon-papier);
+}
+
+.nav-mobile > summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-mobile__volet {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  min-width: 250px;
+  background: var(--veille);
+  border: 1px solid var(--ligne);
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.2rem;
+  box-shadow: 0 22px 42px rgba(20, 26, 21, 0.18);
+}
+
+.nav-mobile__volet > a {
+  padding: 0.5rem 0.8rem;
+  text-decoration: none;
+  border-radius: var(--rayon-papier);
+}
+
+.nav-mobile__volet > a:hover {
+  background: var(--papier-deux);
+}
+
+.nav-mobile__volet .bouton {
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.nav-mobile__groupe {
+  margin: 0.55rem 0.8rem 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sienne-profonde);
+}
+
+@media (min-width: 900px) {
+  .nav-mobile {
+    display: none;
+  }
+}
+
+/* ---------- Pied de page ---------- */
+.semelle {
+  background: var(--foret);
+  color: var(--veille);
+  border-top: 3px solid var(--sienne);
+  margin-top: clamp(1.8rem, 8vw, 5.5rem);
+}
+
+.semelle__grille {
+  display: grid;
+  gap: 2rem;
+  padding-block: clamp(2.2rem, 6vw, 3.8rem);
+}
+
+@media (min-width: 800px) {
+  .semelle__grille {
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
+}
+
+.semelle__titre {
+  margin: 0 0 0.6rem;
+  font-family: var(--plume);
+  font-size: 1.5rem;
+}
+
+.semelle__adresse {
+  font-style: normal;
+  line-height: 1.6;
+  margin: 0 0 0.6rem;
+}
+
+.semelle__ligne a {
+  color: var(--sienne-claire);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.semelle__reseau {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.semelle__reseau a {
+  color: var(--veille);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.semelle__lien {
+  color: var(--veille);
+  text-decoration: none;
+}
+
+.semelle__bas {
+  border-top: 1px solid rgba(244, 237, 221, 0.25);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: space-between;
+  padding-block: 1.2rem;
+  font-size: 0.86rem;
+  color: rgba(244, 237, 221, 0.75);
+}
+
+.semelle__bas a {
+  color: inherit;
+}
+
+.semelle nav {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+}
+
+/* ---------- Barre d'actions mobile ---------- */
+.attache-mobile {
+  position: fixed;
+  z-index: 90;
+  left: clamp(0.6rem, 3vw, 1.2rem);
+  right: clamp(0.6rem, 3vw, 1.2rem);
+  bottom: clamp(0.6rem, 3vw, 1.2rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  padding: 0.55rem;
+  border: 1px solid var(--ligne);
+  border-radius: calc(var(--rayon) + 1rem);
+  background: rgba(248, 246, 234, 0.96);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 18px 40px rgba(20, 26, 21, 0.22);
+}
+
+.attache-mobile .bouton {
+  margin: 0;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .attache-mobile {
+    display: none;
+  }
+}
+
+/* ---------- Bandeau défilant ---------- */
+.ruban {
+  overflow: hidden;
+  background: var(--papier-deux);
+  border-block: 1px solid var(--ligne);
+}
+
+.ruban__piste {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: deroule 38s linear infinite;
+}
+
+@keyframes deroule {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ruban__motif {
+  padding-block: 0.65rem;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sienne-profonde);
+}
+
+/* ---------- Photographies ---------- */
+.panneau {
+  margin: 0;
+}
+
+.panneau img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--rayon-papier);
+  box-shadow: 0 18px 36px rgba(20, 26, 21, 0.14);
+}
+
+.panneau__legende {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--encre-douce);
+}

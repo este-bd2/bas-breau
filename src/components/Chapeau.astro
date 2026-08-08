@@ -1,0 +1,63 @@
+---
+// Chapeau — en-tête du site. Zéro JavaScript : le menu mobile repose sur la
+// balise details (display:none tant que fermé), le téléphone est cliquable.
+import { etablissement } from '../data/site';
+import { NAVIGATION } from '../data/navigation';
+
+const { moteurReservation } = etablissement;
+const telephoneHref = etablissement.contact.telephonePrincipal.replace(/\s/g, '');
+---
+
+<header class="chapeau">
+  <a class="chapeau__marque" href="/" aria-label={`${etablissement.nom} — accueil`}>
+    <span class="chapeau__nom">Bas-Bréau</span>
+    <span class="chapeau__surnom">Barbizon</span>
+  </a>
+
+  <nav class="chapeau__nav" aria-label="Navigation principale">
+    {NAVIGATION.filter((e) => !e.direct).map((groupe) =>
+      groupe.enfants ? (
+        <details class="chapeau__groupe">
+          <summary>{groupe.libelle}</summary>
+          <div class="chapeau__volet">
+            {groupe.enfants.map((lien) => (
+              <a href={lien.href}>{lien.libelle}</a>
+            ))}
+          </div>
+        </details>
+      ) : (
+        <a href={groupe.href}>{groupe.libelle}</a>
+      )
+    )}
+  </nav>
+
+  <div class="chapeau__actions">
+    <a class="chapeau__tel" href={`tel:${telephoneHref}`}>
+      {etablissement.contact.telephonePrincipal}
+    </a>
+    <a class="bouton bouton--sienne" href={moteurReservation} target="_blank" rel="noopener">
+      Réserver
+    </a>
+  </div>
+
+  <details class="nav-mobile">
+    <summary>Menu</summary>
+    <div class="nav-mobile__volet">
+      {NAVIGATION.map((e) =>
+        e.enfants ? (
+          <>
+            <p class="nav-mobile__groupe">{e.libelle}</p>
+            {e.enfants.map((lien) => (
+              <a href={lien.href}>{lien.libelle}</a>
+            ))}
+          </>
+        ) : (
+          <a href={e.href}>{e.libelle}</a>
+        )
+      )}
+      <a class="bouton bouton--sienne" href={moteurReservation} target="_blank" rel="noopener">
+        Réserver en ligne
+      </a>
+    </div>
+  </details>
+</header>

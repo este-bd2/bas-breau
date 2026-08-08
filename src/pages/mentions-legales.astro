@@ -1,0 +1,68 @@
+---
+// Mentions légales — les mêmes mentions publiées par l'établissement [S1]
+// (capital, RCS, TVA), plus l'hébergeur réel de ce site.
+import Canevas from '../layouts/Canevas.astro';
+import { etablissement } from '../data/site';
+
+const { legal, contact } = etablissement;
+---
+
+<Canevas
+  titre="Mentions légales — Hôtellerie du Bas-Bréau"
+  description="Mentions légales du site bas-breau.com : éditeur, siège, RCS, capital, TVA, hébergeur."
+  chemin="/mentions-legales"
+>
+  <div class="spectateur spectateur--mince">
+    <section class="tranche">
+      <p class="inscription">Informations légales</p>
+      <h1>Mentions légales</h1>
+
+      <h2>Éditeur du site</h2>
+      <p>
+        {legal.raisonSociale}, {legal.formeJuridique} au capital de {legal.capital}.
+      </p>
+      <p>
+        Siège social : {contact.adresse.voie}, {contact.adresse.codePostal} {contact.adresse.ville}, {contact.adresse.pays}.
+      </p>
+      <ul class="touches">
+        <li>RCS : {legal.rcs}</li>
+        <li>SIRET : {legal.siret}</li>
+        <li>TVA intracommunautaire : {legal.tva}</li>
+        <li>Code NAF : {legal.naf}</li>
+        <li>Création : {legal.creation}</li>
+        <li>Effectif : {legal.effectif}</li>
+      </ul>
+      <p>
+        Présidente : {legal.representant}.
+      </p>
+
+      <h2>Directeur de la publication</h2>
+      <p>{legal.representant}</p>
+
+      <h2>Contact</h2>
+      <p>
+        Téléphone : <a href={`tel:${contact.telephonePrincipal.replace(/\s/g, '')}`}>{contact.telephonePrincipal}</a> — e-mail :{' '}
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      </p>
+
+      <h2>Hébergeur</h2>
+      <p>
+        Le site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis —{' '}
+        <a href="https://vercel.com" rel="noopener" target="_blank">vercel.com</a>.
+      </p>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        Photographies, marque et contenus : Hôtellerie du Bas-Bréau. Les photographies
+        reproduites proviennent du site officiel de l’établissement. Toute reproduction
+        sans autorisation est interdite.
+      </p>
+
+      <h2>Économie du site</h2>
+      <p>
+        Ce site n’exerce aucune activité éditoriale rémunérée ; il n’utilise ni traceur
+        publicitaire, ni cookie de mesure. Aucune donnée n’est vendue ni transmise à des tiers.
+      </p>
+    </section>
+  </div>
+</Canevas>

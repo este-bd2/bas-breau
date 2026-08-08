@@ -1,0 +1,36 @@
+---
+// Escalier — en-tête de page intérieure avec ou sans image de couverture.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  surtitre: string;
+  titre: string;
+  sous?: string;
+  image?: ImageMetadata;
+}
+
+const { surtitre, titre, sous, image } = Astro.props;
+---
+
+<header class="pagette-tete">
+  {image && (
+    <>
+      <Picture
+        src={image}
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        widths={[640, 1080, 1600]}
+        sizes="100vw"
+        formats={['avif', 'webp']}
+      />
+      <div class="pagette-tete__voile"></div>
+    </>
+  )}
+  <div class="pagette-tete__interieur">
+    <p class="inscription inscription--claire">{surtitre}</p>
+    <h1>{titre}</h1>
+    {sous && <p class="pagette-tete__sous">{sous}</p>}
+  </div>
+</header>

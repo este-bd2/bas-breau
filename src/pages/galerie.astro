@@ -1,0 +1,43 @@
+---
+// Galerie — photos publiées sur le site officiel de l'établissement [S1],
+// présentées telles quelles. Légendes factuelles.
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Panneau from '../components/Panneau.astro';
+import { GALERIE } from '../data/galerie';
+import { REGISTRE } from '../lib/oeuvres';
+---
+
+<Canevas
+  titre="Galerie — L’Hôtellerie du Bas-Bréau en images"
+  description="Les chambres, les salons, le parc de 2 hectares, la cheminée d’époque et la forêt de Fontainebleau, en images, à Barbizon."
+  chemin="/galerie"
+>
+  <Escalier
+    surtitre="Le lieu"
+    titre="La maison en images"
+    image={REGISTRE['hostellerie-bas-breau-paris-hotel.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <Voile
+        surtitre="Photographies"
+        titre="Souvenirs achetés sur place"
+        texte="Toutes les photographies proviennent du site officiel de l’établissement — elles y sont publiées telles quelles."
+      />
+      <div class="galerie">
+        {GALERIE.map((photo) => (
+          <Panneau
+            src={REGISTRE[photo.src]}
+            alt={photo.titre}
+            legende={photo.titre}
+            paresseuse
+            tailles="(max-width: 700px) 92vw, 480px"
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+</Canevas>

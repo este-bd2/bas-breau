@@ -1,0 +1,80 @@
+---
+// Semelle — pied de page : coordonnées réelles, liens de conformité,
+// mention de l'hébergeur (art. 6 LCEN), liens réseaux officiels.
+import { etablissement } from '../data/site';
+import { NAVIGATION } from '../data/navigation';
+
+const { contact, nom } = etablissement;
+---
+
+<footer class="semelle">
+  <div class="spectateur">
+    <div class="semelle__grille">
+      <div>
+        <p class="semelle__titre">{nom}</p>
+        <address class="semelle__adresse">
+          {contact.adresse.voie}
+          <br />
+          {contact.adresse.codePostal} {contact.adresse.ville} — {contact.adresse.pays}
+        </address>
+        <p class="semelle__ligne">
+          <a href={`tel:${contact.telephonePrincipal.replace(/\s/g, '')}`}>
+            {contact.telephonePrincipal}
+          </a>
+        </p>
+        <p class="semelle__ligne">
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        </p>
+      </div>
+
+      <nav aria-label="Plan résumé">
+        {NAVIGATION.map((e) =>
+          e.enfants ? (
+            <>
+              <p class="nav-mobile__groupe">{e.libelle}</p>
+              {e.enfants.map((lien) => (
+                <a class="semelle__lien" href={lien.href}>
+                  {lien.libelle}
+                </a>
+              ))}
+            </>
+          ) : (
+            <a class="semelle__lien" href={e.href}>
+              {e.libelle}
+            </a>
+          )
+        )}
+      </nav>
+
+      <div>
+        <p class="nav-mobile__groupe">Suivre la maison</p>
+        <ul class="semelle__reseau">
+          <li>
+            <a href={contact.reseaux.facebook} rel="noopener" target="_blank">
+              Facebook
+            </a>
+          </li>
+          <li>
+            <a href={contact.reseaux.instagram} rel="noopener" target="_blank">
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a href={contact.reseaux.linkedin} rel="noopener" target="_blank">
+              LinkedIn
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="semelle__bas">
+      <p>© {new Date().getFullYear()} {nom}. Tous droits réservés.</p>
+      <p>
+        <a href="/mentions-legales">Mentions légales</a> ·{' '}
+        <a href="/confidentialite">Confidentialité</a> ·{' '}
+        <a href="/plan-du-site">Plan du site</a>
+      </p>
+    </div>
+  </div>
+</footer>

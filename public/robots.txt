@@ -1,0 +1,23 @@
+# Le site est ouvert aux robots et à l'IA dans le respect des conditions
+# d'utilisation des fournisseurs. Les anciennes pages (bas-breau.com d'origine)
+# ne sont plus servies : leurs adresses renvoient en redirection 301.
+
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://bas-breau.com/sitemap-index.xml

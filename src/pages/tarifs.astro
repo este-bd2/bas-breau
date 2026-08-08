@@ -1,0 +1,100 @@
+---
+// Tarifs & séjours — les prix publiés par l'établissement [S1] au jour du
+// relevé. Le tarif garanti est celui du moteur de réservation.
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Appel from '../components/Appel.astro';
+import { TARIFS } from '../data/offres';
+import { FAQ } from '../data/contact';
+import { etablissement } from '../data/site';
+import { REGISTRE } from '../lib/oeuvres';
+
+const schema = [
+  {
+    '@type': 'FAQPage',
+    mainEntity: FAQ.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.reponse }
+    }))
+  }
+];
+---
+
+<Canevas
+  titre="Tarifs & séjours — Hôtellerie du Bas-Bréau"
+  description="Les prix « à partir de » des chambres de l’Hôtellerie du Bas-Bréau à Barbizon : Classique à 130 €, Supérieure à 150 €, Deluxe à 190 €, Suite à 250 € la nuit."
+  chemin="/tarifs"
+  schema={schema}
+>
+  <Escalier
+    surtitre="Séjourner"
+    titre="Tarifs & séjours"
+    image={REGISTRE['hotel-bas-breau-cover-1.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <Voile
+        surtitre="Tarifs publiés"
+        titre="Le tarif du jour, en réalité"
+        texte={TARIFS.introduction}
+      />
+      <div class="table-tarif">
+        <table>
+          <caption class="visuellement-cache">Tarifs « à partir de » par nuit, tous publics au 08/08/2026.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Gamme</th>
+              <th scope="col">Prix de départ</th>
+              <th scope="col">Précision</th>
+            </tr>
+          </thead>
+          <tbody>
+            {TARIFS.lignes.map((ligne) => (
+              <tr>
+                <th scope="row">{ligne.gamme}</th>
+                <td>{ligne.prix}</td>
+                <td>{ligne.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {TARIFS.supplements.length > 0 && (
+        <div class="notes-supl">
+          {TARIFS.supplements.map((note) => (
+            <p class="saisie__note">{note}</p>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <Voile
+        surtitre="Questions fréquentes"
+        titre="Avant de réserver"
+      />
+      <div class="questions">
+        {FAQ.map((f) => (
+          <details class="question">
+            <summary>{f.question}</summary>
+            <p>{f.reponse}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <Appel
+      titre={TARIFS.cta.titre}
+      texte={TARIFS.cta.texte}
+      bouton={{
+        libelle: TARIFS.cta.bouton,
+        href: etablissement.moteurReservation,
+        externe: true
+      }}
+    />
+  </div>
+</Canevas>

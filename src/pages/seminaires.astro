@@ -1,0 +1,104 @@
+---
+// Séminaires & mariages — cadre, salles et prestations publiés par
+// l'établissement [S1] (page Séminaires & Mariages), relevé 08/08/2026.
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Panneau from '../components/Panneau.astro';
+import Appel from '../components/Appel.astro';
+import { EVENTEMENTS } from '../data/evenements';
+import { etablissement } from '../data/site';
+import { REGISTRE } from '../lib/oeuvres';
+
+const schema = [
+  {
+    '@type': 'EventVenue',
+    name: `${etablissement.nom} — Séminaires & mariages`,
+    url: 'https://bas-breau.com/seminaires',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: etablissement.contact.adresse.voie,
+      postalCode: etablissement.contact.adresse.codePostal,
+      addressLocality: etablissement.contact.adresse.ville,
+      addressCountry: 'FR'
+    }
+  }
+];
+---
+
+<Canevas
+  titre="Séminaires, banquets & mariages — Hôtellerie du Bas-Bréau"
+  description="Journées d’études, séminaires résidentiels, banquets, mariages dans un cadre de 2 hectares à Barbizon : 20 chambres, trois salles, piscine, terrasse, à 1 h de Paris."
+  chemin="/seminaires"
+  schema={schema}
+>
+  <Escalier
+    surtitre="Se réunir"
+    titre="Séminaires, banquets & mariages"
+    image={REGISTRE['hotel-bas-breau-mariage-seminaire-cover.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <div class="duo">
+        <div class="duo__texte">
+          <Voile
+            surtitre="Vos événements"
+            titre="Une maison qui se prête à l’occasion"
+          />
+          <p>{EVENTEMENTS.chapeau}</p>
+          <h2>Sur place</h2>
+          <ul class="touches">
+            {EVENTEMENTS.points.map((point) => (
+              <li>{point}</li>
+            ))}
+          </ul>
+        </div>
+        <Panneau
+          src={REGISTRE['mariage-seminaire-bas-breau-barbizon-250402-08.jpg']}
+          alt="Tables dressées pour une réception"
+          paresseuse
+        />
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <Voile
+        surtitre="Mariages & banquets"
+        titre="Ils se sont retrouvés chez nous"
+        texte="Trois témoignages publiés par l’établissement sur son site officiel (page Séminaires & Mariages, relevé du 08/08/2026)."
+      />
+      <div class="temoignages">
+        {etablissement.temoignages.map((t) => (
+          <figure class="temoignage">
+            <blockquote>{t.texte}</blockquote>
+            <figcaption>
+              {t.auteur} — {t.date}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="tranche">
+      <Voile
+        surtitre="Ambiances"
+        titre="Le parc, les salons, la terrasse"
+      />
+      <div class="galerie">
+        {EVENTEMENTS.images.map((img) => (
+          <Panneau src={REGISTRE[img]} alt="Réception à l’Hôtellerie du Bas-Bréau" paresseuse />
+        ))}
+      </div>
+    </section>
+
+    <Appel
+      titre="Organiser un événement"
+      texte="Racontez-nous votre projet : le délai, les dates, le nombre d’invités. L’équipe de la maison revient vers vous avec une proposition sur mesure."
+      bouton={{
+        libelle: 'Demander un devis',
+        href: '/contact'
+      }}
+    />
+  </div>
+</Canevas>

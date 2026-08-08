@@ -1,0 +1,23 @@
+{
+  "name": "bas-breau",
+  "type": "module",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Hôtellerie du Bas-Bréau — site officiel, Barbizon (77). Astro statique, zéro dépendance runtime.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:collisions": "node scripts/collision-detect.mjs",
+    "check:liens": "node scripts/links-check.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/public-sans": "^5.3.0",
+    "astro": "^7.2.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
+  }
+}

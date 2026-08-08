@@ -1,0 +1,156 @@
+---
+// Contact — coordonnées réelles, formulaire sans JavaScript (POST natif vers
+// api/contact.mjs), consentement, FAQ.
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Appel from '../components/Appel.astro';
+import { FORMULAIRE, FAQ } from '../data/contact';
+import { etablissement } from '../data/site';
+
+const { erreur } = Astro.props;
+
+const messagesErreur: Record<string, string> = {
+  validation: 'Le message n’a pas pu partir : vérifiez votre adresse e-mail, le message et la case de consentement.',
+  config: 'L’envoi est momentanément indisponible — merci d’appeler directement la maison.',
+  envoi: 'L’envoi n’a pas abouti. Retentez, ou appelez la réception au téléphone de l’hôtel.',
+  autre: 'L’envoi n’a pas abouti — merci de réessayer.'
+};
+
+const telephones = etablissement.contact.telephonePrincipal;
+
+const schema = [
+  {
+    '@type': 'FAQPage',
+    mainEntity: FAQ.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.reponse }
+    }))
+  }
+];
+---
+
+<Canevas
+  titre="Contactez l’Hôtellerie du Bas-Bréau"
+  description="Contact direct et formulaire de demande : chambres & suites, événements, séminaires, privatisations. 22 Grand Rue, 77630 Barbizon — +33 1 64 64 06 24."
+  chemin="/contact"
+  schema={schema}
+>
+  <Escalier
+    surtitre="La réception"
+    titre="Contact"
+    image={undefined}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <div class="duo">
+        <div class="duo__texte">
+          <Voile
+            surtitre="Écrivez, appelez"
+            titre="La maison vous répond"
+          />
+          <address class="coordees">
+            <div>
+              <dt>{etablissement.contact.adresse.voie}</dt>
+              <dd>{etablissement.contact.adresse.ville}, {etablissement.contact.adresse.codePostal}</dd>
+            </div>
+            <div>
+              <dt>Téléphone</dt>
+              <dd>
+                <a href={`tel:${etablissement.contact.telephonePrincipal.replace(/\s/g, '')}`}>{etablissement.contact.telephonePrincipal}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>E-mail</dt>
+              <dd>
+                <a href={`mailto:${etablissement.contact.email}`}>{etablissement.contact.email}</a>
+              </dd>
+            </div>
+          </address>
+          <p class="saisie__note">{FORMULAIRE.noteRGPD}</p>
+        </div>
+
+        <form class="saisie" method="post" action="/api/contact" novalidate>
+          {/* Champ leurre anti-robot — il reste invisible aux humains */}
+          <p class="leurre-declare" aria-hidden="true">
+            <label>
+              Ne pas remplir ce champ
+              <input type="text" name="chambres_detail" value="" tabindex="-1" autocomplete="off" />
+            </label>
+          </p>
+
+          {erreur && (
+            <p class="saisie__erreur" role="alert">
+              {messagesErreur[erreur] || messagesErreur.autre}
+            </p>
+          )}
+
+          <label class="saisie__champ">
+            <span>Nom</span>
+            <input type="text" name="nom" required autocomplete="name" />
+          </label>
+
+          <label class="saisie__champ">
+            <span>Adresse e-mail</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+
+          <label class="saisie__champ">
+            <span>Téléphone (facultatif)</span>
+            <input type="tel" name="telephone" autocomplete="tel" />
+          </label>
+
+          <label class="saisie__champ">
+            <span>Votre demande</span>
+            <select name="motif">
+              {FORMULAIRE.motif.map((m) => (
+                <option value={m.valeur}>{m.libelle}</option>
+              ))}
+            </select>
+          </label>
+
+          <label class="saisie__champ">
+            <span>Message</span>
+            <textarea name="message" rows="7" required></textarea>
+          </label>
+
+          <label class="saisie__accord">
+            <input type="checkbox" name="consentement" value="oui" required />
+            <span>{FORMULAIRE.consentement}</span>
+          </label>
+
+          <button class="bouton bouton--sienne" type="submit">
+            Envoyer la demande
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <Voile
+        surtitre="Questions fréquentes"
+        titre="Réponses rapides"
+      />
+      <div class="questions">
+        {FAQ.map((f) => (
+          <details class="question">
+            <summary>{f.question}</summary>
+            <p>{f.reponse}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <Appel
+      titre="Traiter avec la maison"
+      texte="Pour une réservation immédiate, le moteur officel est le plus rapide."
+      bouton={{
+        libelle: 'Réserver en ligne',
+        href: etablissement.moteurReservation,
+        externe: true
+      }}
+    />
+  </div>
+</Canevas>

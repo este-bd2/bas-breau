@@ -1,0 +1,88 @@
+---
+// Restaurant & Stevenson's Bar — état publié par l'établissement le jour du
+// relevé : service habituel suspendu, réception de groupes sur réservation.
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Panneau from '../components/Panneau.astro';
+import Appel from '../components/Appel.astro';
+import { restaurant, BAR_STEVENSON } from '../data/restaurant';
+import { REGISTRE } from '../lib/oeuvres';
+
+const schema = [
+  {
+    '@type': 'Restaurant',
+    name: 'Restaurant du Bas-Bréau',
+    url: 'https://bas-breau.com/restaurant',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '22 Grande Rue',
+      postalCode: '77630',
+      addressLocality: 'Barbizon',
+      addressCountry: 'FR'
+    }
+  }
+];
+---
+
+<Canevas
+  titre="Restaurant & Stevenson’s Bar — Hôtellerie du Bas-Bréau"
+  description="Le restaurant du Bas-Bréau à Barbizon reçoit actuellement sur réservation : séminaires, événements privés, associatifs et professionnels. Le bar de cheminée reste ouvert."
+  chemin="/restaurant"
+  schema={schema}
+>
+  <Escalier
+    surtitre="Se réunir"
+    titre="Restaurant & Stevenson’s Bar"
+    image={REGISTRE['restaurant-hotel-bas-breau-barbizon-250320-04.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <div class="bandeau-etat" role="status">
+        <p class="inscription">{restaurant.statut}</p>
+      </div>
+      <Voile
+        surtitre="Le restaurant"
+        titre={restaurant.titre}
+      />
+      <div class="paragraphe-libre">
+        {restaurant.annonce.map((p) => (
+          <p>{p}</p>
+        ))}
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <div class="duo">
+        <Panneau src={REGISTRE[BAR_STEVENSON.image]} alt={BAR_STEVENSON.nom} paresseuse />
+        <div class="duo__texte">
+          <h2>{BAR_STEVENSON.nom}</h2>
+          <p class="citation">{BAR_STEVENSON.accroche}</p>
+          <p>{BAR_STEVENSON.texte}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tranche">
+      <Voile
+        surtitre="Ambiances"
+        titre="La salle, le salon, la terrasse"
+      />
+      <div class="galerie">
+{restaurant.images.map((img) => (
+          <Panneau src={REGISTRE[img]} alt={restaurant.titre} paresseuse tailles="(max-width: 700px) 92vw, 480px" />
+        ))}
+      </div>
+    </section>
+
+    <Appel
+      titre="Un événement à l’esprit ?"
+      texte="Le restaurant est en capacité de vous accueillir sur réservation. Décrivez votre projet, nous revenons avec un devis."
+      bouton={{
+        libelle: 'Demander un devis',
+        href: '/contact'
+      }}
+    />
+  </div>
+</Canevas>

@@ -1,0 +1,99 @@
+---
+// Situation & accès — comment venir et ce qui entoure la maison.
+// Coordonnées géographiques du siège : registre public [S2].
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import { ACCES } from '../data/acces';
+import { etablissement } from '../data/site';
+import { REGISTRE } from '../lib/oeuvres';
+
+const { lat, lon } = etablissement.legal.geocode;
+const embedOsm =
+  'https://www.openstreetmap.org/export/embed.html'
+  + '?bbox=' + encodeURIComponent(`${parseFloat(lon) - 0.012},${parseFloat(lat) - 0.008},${parseFloat(lon) + 0.012},${parseFloat(lat) + 0.008}`)
+  + '&layer=mapnik&marker=' + encodeURIComponent(`${lat},${lon}`);
+
+const schema = [
+  {
+    '@type': 'LocalBusiness',
+    name: etablissement.nom,
+    url: 'https://bas-breau.com/situation-et-acces',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: etablissement.contact.adresse.voie,
+      postalCode: etablissement.contact.adresse.codePostal,
+      addressLocality: etablissement.contact.adresse.ville,
+      addressCountry: 'FR'
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: lat, longitude: lon }
+  }
+];
+---
+
+<Canevas
+  titre="Situation & accès — Hôtellerie du Bas-Bréau"
+  description="22, Grande Rue, 77630 Barbizon — à moins d’une heure de Paris en voiture, à 12 km du château de Fontainebleau. Parking gratuit, gare de Fontainebleau-Avon."
+  chemin="/situation-et-acces"
+  schema={schema}
+>
+  <Escalier
+    surtitre="Le lieu"
+    titre="Situation & accès"
+    image={REGISTRE['hotel-bas-breau-cover-1.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <Voile
+        surtitre="Adresse du domaine"
+        titre="22, Grande Rue"
+        texte={ACCES.chapeau}
+      />
+      <dl class="coordees">
+        <div>
+          <dt>{etablissement.contact.adresse.voie}</dt>
+          <dd>{etablissement.contact.adresse.codePostal} {etablissement.contact.adresse.ville}</dd>
+        </div>
+        <div>
+          <dt>Coordonnées (Insee)</dt>
+          <dd>{lat}, {lon}</dd>
+        </div>
+      </dl>
+
+      <div class="duo">
+        <div>
+          {ACCES.lignes.map((ligne) => (
+            <article>
+              <h2>{ligne.titre}</h2>
+              <p>{ligne.texte}</p>
+            </article>
+          ))}
+        </div>
+        <div class="carte-osm">
+          <iframe
+            src={embedOsm}
+            title="Plan OpenStreetMap — Hôtellerie du Bas-Bréau, 22 Grande Rue, Barbizon"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <Voile
+        surtitre="Autour de la maison"
+        titre="La forêt immédiate"
+      />
+      <div class="officine">
+        {ACCES.environs.map((env) => (
+          <article class="officine__entree">
+            <h3>{env.titre}</h3>
+            <p>{env.texte}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</Canevas>

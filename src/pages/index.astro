@@ -1,0 +1,219 @@
+---
+// Accueil — hero plein écran, prestations, chiffres réels, histoire,
+// témoignages publiés par l'établissement, bandeau d'action.
+import { Picture } from 'astro:assets';
+import Canevas from '../layouts/Canevas.astro';
+import Voile from '../components/Voile.astro';
+import Panneau from '../components/Panneau.astro';
+import Ruban from '../components/Ruban.astro';
+import Appel from '../components/Appel.astro';
+import { etablissement } from '../data/site';
+import { PRESTATIONS } from '../data/prestations';
+import { chambres } from '../data/sejours';
+import { histoire } from '../data/histoire';
+import { REGISTRE } from '../lib/oeuvres';
+
+const imageHero = REGISTRE['hostellerie-bas-breau-paris-hotel.jpg'];
+const imageHistoire = REGISTRE['mariage-seminaire-bas-breau-barbizon-250402-13.jpg'];
+
+const motsRuban = [
+  'Forêt de Fontainebleau',
+  'Parc de 2 hectares',
+  'Piscine chauffée',
+  'Village des peintres'
+];
+
+const schema = [
+  {
+    '@type': 'Hotel',
+    name: etablissement.nom,
+    description: etablissement.sousTitre,
+    url: 'https://bas-breau.com/',
+    image: 'https://bas-breau.com/devanture-hotel.jpg',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: etablissement.contact.adresse.voie,
+      postalCode: etablissement.contact.adresse.codePostal,
+      addressLocality: etablissement.contact.adresse.ville,
+      addressCountry: 'FR'
+    },
+    telephone: etablissement.contact.telephonePrincipal,
+    email: etablissement.contact.email,
+    priceRange: '€€',
+    sameAs: [
+      etablissement.contact.reseaux.facebook,
+      etablissement.contact.reseaux.instagram,
+      etablissement.contact.reseaux.linkedin
+    ]
+  }
+];
+---
+
+<Canevas
+  titre="Hôtellerie du Bas-Bréau — Hôtel à Barbizon, aux portes de la forêt de Fontainebleau"
+  description="Chambres & suites, parc de 2 hectares, piscine chauffée, à Barbizon. Les tarifs et disponibilités en temps réel sur le site officiel."
+  chemin="/"
+  schema={schema}
+>
+  <header class="hero">
+    <div class="hero__toile">
+      <Picture
+        src={imageHero}
+        alt="La demeure de l’Hôtellerie du Bas-Bréau dans son parc"
+        formats={['avif', 'webp']}
+        widths={[640, 1024, 1600, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    <span class="hero__marque" aria-hidden="true">Bas-Bréau</span>
+    <div class="hero__voile"></div>
+    <div class="hero__texte">
+      <p class="inscription inscription--claire">Hôtellerie du Bas-Bréau</p>
+      <h1>À Barbizon, l’auberge des peintres au bord de la forêt de Fontainebleau</h1>
+      <p class="hero__sous">{etablissement.sousTitre}</p>
+      <div class="hero__actions">
+        <a class="bouton bouton--sienne" href={etablissement.moteurReservation} target="_blank" rel="noopener">
+          Réserver en ligne
+        </a>
+        <a class="bouton bouton--clair" href="/chambres-suites">
+          Les chambres & suites
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <Ruban mots={motsRuban} />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <Voile
+        surtitre="Les prestations"
+        titre="Ce que propose la maison"
+        texte="Quatre familles de prestations, telles que publiées sur le site de l’établissement."
+      />
+      <div class="officine">
+        {PRESTATIONS.map((p) => (
+          <a class="officine__entree" href={`/${p.slug}`}>
+            <div class="officine__image">
+              <Panneau
+                src={REGISTRE[p.image]}
+                alt={p.titre}
+                paresseuse
+                tailles="(max-width: 700px) 92vw, 420px"
+              />
+            </div>
+            <h3>{p.titre}</h3>
+            <p>{p.accroche}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <Voile
+        surtitre="Chiffres réels"
+        titre="La mesure de la maison"
+        texte="Des chiffres publiés par l’établissement lui-même et corroborés par les annuaires publics."
+      />
+      <dl class="chiffres">
+        <div>
+          <dt>20</dt>
+          <dd>chambres & suites</dd>
+        </div>
+        <div>
+          <dt>2 ha</dt>
+          <dd>de parc ombragé</dd>
+        </div>
+        <div>
+          <dt>12 km</dt>
+          <dd>du château de Fontainebleau</dd>
+        </div>
+        <div>
+          <dt>≈ 1 h</dt>
+          <dd>de Paris (en voiture)</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="tranche">
+      <div class="duo duo--inverse">
+        <Panneau
+          src={imageHistoire}
+          alt="Réception dans les salons de l’Hôtellerie du Bas-Bréau"
+          paresseuse
+        />
+        <div class="duo__texte">
+          <Voile
+            surtitre="Depuis 1862"
+            titre="Une auberge entrée dans l’histoire"
+            texte="Peintres, écrivains, voyageurs de génie : l’ancienne auberge du bourg a vu passer tout un siècle de conversations."
+          />
+          <ol class="frise">
+            {histoire.periode.map((e) => (
+              <li class="frise__jalon">
+                <span class="frise__annee">{e.annee}</span>
+                <strong class="frise__titre">{e.titre}</strong>
+              </li>
+            ))}
+          </ol>
+          <a class="bouton bouton--sienne" href="/histoire">Lire toute l’histoire</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-veille">
+      <Voile
+        surtitre="Chambres & suites"
+        titre="Quatre gammes dans la lumière du parc"
+      />
+      <div class="grille-prestations">
+        {chambres.map((c) => (
+          <a class="prestation" href="/chambres-suites">
+            <Panneau
+              src={REGISTRE[c.images[0]]}
+              alt={c.nom}
+              paresseuse
+              tailles="(max-width: 700px) 92vw, 380px"
+            />
+            <div class="prestation__corps">
+              <h3>{c.nom}</h3>
+              <p>{c.personnes} · dès {c.prixDepuis}</p>
+              <span class="prestation__fleche">Découvrir →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="tranche">
+      <Voile
+        surtitre="Témoignages"
+        titre="Ils se sont retrouvés chez nous"
+        texte="Trois témoignages publiés par l’établissement sur son site officiel — page Séminaires et Mariages, relevé du 08/08/2026."
+      />
+      <div class="temoignages">
+        {etablissement.temoignages.map((t) => (
+          <figure class="temoignage">
+            <blockquote>{t.texte}</blockquote>
+            <figcaption>
+              {t.auteur} — {t.date}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <Appel
+      titre="Réserver au Bas-Bréau"
+      texte="Disponibilités et tarifs en temps réel sur le moteur officiel de l’hôtel."
+      bouton={{
+        libelle: 'Réserver en ligne',
+        href: etablissement.moteurReservation,
+        externe: true
+      }}
+      secondaire={{ libelle: 'Situation & accès', href: '/situation-et-acces' }}
+    />
+  </div>
+</Canevas>

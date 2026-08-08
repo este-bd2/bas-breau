@@ -1,0 +1,35 @@
+---
+// Appel — bande d'action finale : titre, texte, bouton, lien secondaire.
+interface Props {
+  titre: string;
+  texte: string;
+  bouton: { libelle: string; href: string; externe?: boolean };
+  secondaire?: { libelle: string; href: string };
+}
+
+const { titre, texte, bouton, secondaire } = Astro.props;
+---
+
+<section class="appel">
+  <div class="spectateur appel__int">
+    <div>
+      <h2>{titre}</h2>
+      <p>{texte}</p>
+    </div>
+    <div class="appel__actions">
+      <a
+        class="bouton bouton--sienne"
+        href={bouton.href}
+        target={bouton.externe ? '_blank' : undefined}
+        rel={bouton.externe ? 'noopener' : undefined}
+      >
+        {bouton.libelle}
+      </a>
+      {secondaire && (
+        <a class="bouton bouton--clair" href={secondaire.href}>
+          {secondaire.libelle}
+        </a>
+      )}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,228 @@
+/* ============================================================
+   BAS-BRÉAU — atelier.css : fondations, tonalités, cadres.
+   Identité « atelier de Barbizon » : papier, encre de forêt,
+   ocre sienne. Polices auto-hébergées. Animations limitées
+   à transform et opacity. prefers-reduced-motion respecté.
+   ============================================================ */
+
+@import '@fontsource/fraunces/latin-400.css';
+@import '@fontsource/fraunces/latin-500.css';
+@import '@fontsource/fraunces/latin-600.css';
+@import '@fontsource/fraunces/latin-400-italic.css';
+@import '@fontsource/public-sans/latin-400.css';
+@import '@fontsource/public-sans/latin-500.css';
+@import '@fontsource/public-sans/latin-700.css';
+
+:root {
+  --papier: #f3eddd;
+  --papier-deux: #ebe2c9;
+  --papier-trois: #ddd0ab;
+  --encre: #141a15;
+  --foret: #1f2d22;
+  --mousse: #47654a;
+  --sienne: #b06a3c;
+  --sienne-profonde: #8d4f28;
+  --veille: #faf6ea;
+  --ligne: rgba(20, 26, 21, 0.16);
+  --ligne-claire: rgba(250, 246, 234, 0.22);
+
+  --plume: 'Fraunces', Georgia, serif;
+  --antique: 'Public Sans', Helvetica, Arial, sans-serif;
+
+  --grand-largeur: 1200px;
+  --texte-largeur: 720px;
+  --rayon-papier: 2px;
+
+  --courbe: cubic-bezier(0.16, 1, 0.3, 1);
+  --cadence-1: clamp(3.4rem, 9vw, 6.8rem);
+  --cadence-2: clamp(2.3rem, 4.6vw, 3.6rem);
+  --cadence-3: clamp(1.55rem, 2.7vw, 2.1rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--antique);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+picture {
+  display: contents;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--plume);
+  font-weight: 500;
+  line-height: 1.08;
+  margin: 0 0 0.6em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--cadence-1);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--cadence-2);
+}
+
+h3 {
+  font-size: var(--cadence-3);
+}
+
+p {
+  margin: 0 0 1.2em;
+}
+
+a {
+  color: var(--foret);
+  text-decoration-color: var(--sienne);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--sienne-profonde);
+}
+
+strong {
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+}
+
+::selection {
+  background: var(--sienne);
+  color: var(--veille);
+}
+
+.spectateur {
+  max-width: var(--grand-largeur);
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 2.6rem);
+}
+
+.spectateur--mince {
+  max-width: var(--texte-largeur);
+}
+
+.inscription {
+  font-family: var(--antique);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sienne-profonde);
+  margin: 0 0 1.1rem;
+}
+
+.inscription--claire {
+  color: var(--papier-deux);
+}
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.95em 1.7em;
+  border-radius: var(--rayon-papier);
+  background: var(--foret);
+  color: var(--veille);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--foret);
+  transition: transform 0.35s var(--courbe), background-color 0.35s var(--courbe),
+    border-color 0.35s var(--courbe);
+  will-change: transform;
+}
+
+.bouton:hover {
+  transform: translateY(-2px);
+  background: var(--mousse);
+  color: var(--veille);
+  border-color: var(--mousse);
+}
+
+.bouton--clair {
+  background: var(--veille);
+  color: var(--foret);
+  border-color: rgba(20, 26, 21, 0.25);
+}
+
+.bouton--clair:hover {
+  background: var(--papier-deux);
+  color: var(--encre);
+}
+
+.bouton--sienne {
+  background: var(--sienne);
+  border-color: var(--sienne);
+  color: var(--veille);
+}
+
+.bouton--sienne:hover {
+  background: var(--sienne-profonde);
+  border-color: var(--sienne-profonde);
+}
+
+.panneau {
+  background: var(--veille);
+  padding: 0.55rem 0.55rem 0.3rem;
+  box-shadow: 0 18px 44px rgba(20, 26, 21, 0.16), 0 2px 6px rgba(20, 26, 21, 0.08);
+}
+
+.panneau img {
+  width: 100%;
+}
+
+.panneau__legende {
+  font-family: var(--plume);
+  font-style: italic;
+  font-size: 0.92rem;
+  padding: 0.55rem 0.2rem 0.35rem;
+  color: var(--encre);
+}
+
+.traite {
+  display: block;
+  width: 132px;
+  height: 14px;
+  color: var(--sienne);
+  margin: 0.4rem 0 1.4rem;
+}
+
+.traite--centre {
+  margin-inline: auto;
+}
+
+.chute {
+  font-family: var(--plume);
+  font-style: italic;
+  color: var(--mousse);
+}

@@ -1,0 +1,101 @@
+---
+// Histoire — le récit publié par l'établissement [S3] (ancien site officiel),
+// corroboré par l'école de Barbizon. Rien n'est inventé.
+import Canevas from '../layouts/Canevas.astro';
+import Escalier from '../components/Escalier.astro';
+import Voile from '../components/Voile.astro';
+import Panneau from '../components/Panneau.astro';
+import { histoire } from '../data/histoire';
+import { REGISTRE } from '../lib/oeuvres';
+
+const schema = [
+  {
+    '@type': 'LocalBusiness',
+    name: 'Hôtellerie du Bas-Bréau',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '22 Grande Rue',
+      postalCode: '77630',
+      addressLocality: 'Barbizon',
+      addressCountry: 'FR'
+    },
+    foundingDate: '1867'
+  }
+];
+---
+
+<Canevas
+  titre="Histoire — Hôtellerie du Bas-Bréau"
+  description="Auberge Siron, Hôtel de l’Exposition, Hôtellerie du Bas-Bréau : une adresse créée au XIXᵉ siècle à Barbizon, village des peintres et hôte de Robert Louis Stevenson."
+  chemin="/histoire"
+  schema={schema}
+>
+  <Escalier
+    surtitre="Le lieu"
+    titre="Une histoire de toiles, de plumes et de feux"
+    image={REGISTRE['bas-breau-cheminee.jpg']}
+  />
+
+  <div class="spectateur">
+    <section class="tranche">
+      <Voile
+        surtitre="Le récit de la maison"
+        titre="De l’auberge Siron à l’Hôtellerie du Bas-Bréau"
+        texte="Ce que l’établissement publiait lui-même sur son ancien site, corroboré par les archives du village."
+      />
+      {histoire.chapeau.map((p) => (
+        <p>{p}</p>
+      ))}
+    </section>
+
+    <section class="tranche tranche--ton-papier">
+      <ol class="frise">
+        {histoire.periode.map((e) => (
+          <li class="frise__jalon">
+            <span class="frise__annee">{e.annee}</span>
+            <strong class="frise__titre">{e.titre}</strong>
+            <p>{e.texte}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="tranche">
+      <div class="duo">
+        <Panneau
+          src={REGISTRE['restaurant-hotel-bas-breau-barbizon-250320-03.jpg']}
+          alt="Cheminée d’époque du restaurant"
+          paresseuse
+        />
+        <div class="duo__texte">
+          <Voile
+            surtitre="Le livre d’or"
+            titre="Hôtes du Bas-Bréau"
+            texte="Les noms publiés sur l’ancien site de l’établissement."
+          />
+          <div class="nuage">
+            {histoire.hotes.map((h) => (
+              <span>{h}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tranche tranche--ton-veille">
+      <Voile
+        surtitre="Le carnet de bord"
+        titre="Années et visages"
+        texte="Le carnet publié par l’ancien site : année par année, les visages qui sont passés."
+      />
+      <ul class="carnet">
+        {histoire.carnet.map((c) => (
+          <li>
+            <span class="carnet__annee">{c.annee}</span>
+            {c.noms.join(', ')}
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</Canevas>

@@ -1,0 +1,46 @@
+---
+// Plan du site — hiérarchie exposée issue de NAVIGATION.
+import Canevas from '../layouts/Canevas.astro';
+import { NAVIGATION } from '../data/navigation';
+import { etablissement } from '../data/site';
+---
+
+<Canevas
+  titre="Plan du site — Hôtellerie du Bas-Bréau"
+  description="Toutes les pages de bas breau.com : chambres, tarifs, restaurant, séminaires, histoire, accès, galerie, contact."
+  chemin="/plan-du-site"
+>
+  <div class="spectateur spectateur--mince">
+    <section class="tranche">
+      <p class="inscription">Navigation</p>
+      <h1>Plan du site</h1>
+      <ul class="plansite">
+        <li><a href="/">Accueil</a></li>
+        {NAVIGATION.map((groupe) =>
+          groupe.enfants ? (
+            <li>
+              <p>{groupe.libelle}</p>
+              <ul>
+                {groupe.enfants.map((lien) => (
+                  <li>
+                    <a href={lien.href}>{lien.libelle}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a href={groupe.href}>{groupe.libelle}</a>
+            </li>
+          )
+        )}
+        <li><a href="/merci">Merci (confirmation d’envoi)</a></li>
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/confidentialite">Confidentialité</a></li>
+      </ul>
+      <p class="saisie__note">
+        Lien de réservation en ligne : {etablissement.moteurReservation}
+      </p>
+    </section>
+  </div>
+</Canevas>

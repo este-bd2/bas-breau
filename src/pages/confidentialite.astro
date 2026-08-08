@@ -1,0 +1,59 @@
+---
+// Confidentialité — politique du site : pas de cookie, formulaire, données
+// transmises uniquement par e-mail, droit d'accès.
+import Canevas from '../layouts/Canevas.astro';
+import { etablissement } from '../data/site';
+---
+
+<Canevas
+  titre="Confidentialité — Hôtellerie du Bas-Bréau"
+  description="Politique de confidentialité de bas breau.com : aucun traceur, données de contact utilisées uniquement pour répondre."
+  chemin="/confidentialite"
+>
+  <div class="spectateur spectateur--mince">
+    <section class="tranche">
+      <p class="inscription">Confidentialité</p>
+      <h1>Politique de confidentialité</h1>
+
+      <h2>Les données que le site n’utilise pas</h2>
+      <p>
+        Ce site est conçu pour ne pas vous suivre : aucune mesure publicitaire, aucun
+        traceur tiers, aucun cookie de marketing. Les polices et les images sont servies
+        depuis le site lui-même.
+      </p>
+
+      <h2>Les données du formulaire de contact</h2>
+      <p>
+        Le seul traitement de données a lieu lorsque vous envoyez le formulaire de
+        contact : le nom, l’e-mail, le téléphone (facultatif) et le message sont transmis
+        à l’équipe de l’hôtel par courrier électronique, dans le but unique de répondre
+        à votre demande.
+      </p>
+      <p>
+        Ces informations ne sont ni stockées dans une base de données, ni utilisées
+        à des fins de prospection, ni transmises à des tiers.
+      </p>
+
+      <h2>Réservation en ligne</h2>
+      <p>
+        La réservation en ligne s’effectue sur la plateforme officielle de réservation de
+        l’hôtel (Reservit) depuis un lien externe. La politique de ce prestataire
+        s’applique alors à vos données.
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement
+        et d’opposition sur vos données. Pour l’exercer, écrivez à{' '}
+        <a href={`mailto:${etablissement.contact.email}`}>{etablissement.contact.email}</a>.
+        Le responsable des données est {etablissement.legal.dpo}.
+      </p>
+
+      <h2>Égalité</h2>
+      <p>
+        Ce site relève de la loi pour tous, sans exception : 22 Grande Rue, 77630 Barbizon.
+        Réclamation à la CNIL possible à tout moment.
+      </p>
+    </section>
+  </div>
+</Canevas>

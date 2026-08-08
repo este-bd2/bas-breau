@@ -1,0 +1,35 @@
+---
+// Merci — confirmation d'envoi repérée par URL (jamais servi après échec).
+import Canevas from '../layouts/Canevas.astro';
+import { etablissement } from '../data/site';
+---
+
+<Canevas
+  titre="Demande envoyée — Hôtellerie du Bas-Bréau"
+  description="Votre demande a bien été transmise à l’équipe de l’Hôtellerie du Bas-Bréau."
+  chemin="/merci"
+>
+  <div class="spectateur spectateur--mince">
+    <section class="tranche">
+      <p class="inscription">Demande transmise</p>
+      <h1>Merci pour votre message</h1>
+      <p>
+        Votre demande a bien été transmise à l’équipe de l’hôtel. Nous y répondons
+        généralement sous deux jours ouvrés.
+      </p>
+      <p>
+        Pour une réponse plus rapide encore, l’accueil reste joignable au{' '}
+        <a href={`tel:${etablissement.contact.telephonePrincipal.replace(/\s/g, '')}`}>
+          {etablissement.contact.telephonePrincipal}
+        </a>{' '}
+        et au{' '}
+        <a href={`mailto:${etablissement.contact.email}`}>{etablissement.contact.email}</a>.
+      </p>
+      <p>
+        <a class="bouton bouton--sienne" href="/">
+          Retour à l’accueil
+        </a>
+      </p>
+    </section>
+  </div>
+</Canevas>

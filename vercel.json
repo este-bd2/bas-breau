@@ -1,0 +1,92 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    {
+      "source": "/_astro/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/vcard.html", "destination": "/contact", "status": 301 },
+
+    { "source": "/fr/chambres-et-suites.html", "destination": "/chambres-suites", "status": 301 },
+    { "source": "/fr/detente-et-loisirs.html", "destination": "/detente-et-loisirs", "status": 301 },
+    { "source": "/fr/galerie.htm", "destination": "/galerie", "status": 301 },
+    { "source": "/fr/index.html", "destination": "/", "status": 301 },
+    { "source": "/fr/my-meeting.html", "destination": "/seminaires", "status": 301 },
+    { "source": "/fr/my-table.html", "destination": "/restaurant", "status": 301 },
+    { "source": "/fr/philosophie-et-histoire.html", "destination": "/histoire", "status": 301 },
+    { "source": "/fr/plandessalons.htm", "destination": "/seminaires", "status": 301 },
+    { "source": "/fr/restaurant-et-bistrot.html", "destination": "/restaurant", "status": 301 },
+    { "source": "/fr/restaurant.htm", "destination": "/restaurant", "status": 301 },
+    { "source": "/fr/seminaires-et-receptions.html", "destination": "/seminaires", "status": 301 },
+    { "source": "/fr/situation-et-acces.html", "destination": "/situation-et-acces", "status": 301 },
+    { "source": "/fr/speed-search-texte.html", "destination": "/contact", "status": 301 },
+    { "source": "/fr/tarifs-et-offres-speciales.html", "destination": "/tarifs", "status": 301 },
+    { "source": "/fr/chambres-et-suites.php", "destination": "/chambres-suites", "status": 301 },
+    { "source": "/fr/detente-et-loisirs.php", "destination": "/detente-et-loisirs", "status": 301 },
+    { "source": "/fr/my-meeting.php", "destination": "/seminaires", "status": 301 },
+    { "source": "/fr/my-table.php", "destination": "/restaurant", "status": 301 },
+    { "source": "/fr/philosophie-et-histoire.php", "destination": "/histoire", "status": 301 },
+    { "source": "/fr/restaurant-et-bistrot.php", "destination": "/restaurant", "status": 301 },
+    { "source": "/fr/seminaires-et-receptions.php", "destination": "/seminaires", "status": 301 },
+    { "source": "/fr/situation-et-acces.php", "destination": "/situation-et-acces", "status": 301 },
+    { "source": "/fr/speed-search-texte.php", "destination": "/contact", "status": 301 },
+    { "source": "/fr/tarifs-et-offres-speciales.php", "destination": "/tarifs", "status": 301 },
+
+    { "source": "/uk/chambres-et-suites.html", "destination": "/chambres-suites", "status": 301 },
+    { "source": "/uk/detente-et-loisirs.html", "destination": "/detente-et-loisirs", "status": 301 },
+    { "source": "/uk/galerie.htm", "destination": "/galerie", "status": 301 },
+    { "source": "/uk/index.html", "destination": "/", "status": 301 },
+    { "source": "/uk/my-meeting.html", "destination": "/seminaires", "status": 301 },
+    { "source": "/uk/my-table.html", "destination": "/restaurant", "status": 301 },
+    { "source": "/uk/philosophie-et-histoire.html", "destination": "/histoire", "status": 301 },
+    { "source": "/uk/plandessalons.htm", "destination": "/seminaires", "status": 301 },
+    { "source": "/uk/restaurant-et-bistrot.html", "destination": "/restaurant", "status": 301 },
+    { "source": "/uk/restaurant.htm", "destination": "/restaurant", "status": 301 },
+    { "source": "/uk/seminaires-et-receptions.html", "destination": "/seminaires", "status": 301 },
+    { "source": "/uk/situation-et-acces.html", "destination": "/situation-et-acces", "status": 301 },
+    { "source": "/uk/speed-search-texte.html", "destination": "/contact", "status": 301 },
+    { "source": "/uk/tarifs-et-offres-speciales.html", "destination": "/tarifs", "status": 301 },
+    { "source": "/uk/chambres-et-suites.php", "destination": "/chambres-suites", "status": 301 },
+    { "source": "/uk/detente-et-loisirs.php", "destination": "/detente-et-loisirs", "status": 301 },
+    { "source": "/uk/my-meeting.php", "destination": "/seminaires", "status": 301 },
+    { "source": "/uk/my-table.php", "destination": "/restaurant", "status": 301 },
+    { "source": "/uk/philosophie-et-histoire.php", "destination": "/histoire", "status": 301 },
+    { "source": "/uk/restaurant-et-bistrot.php", "destination": "/restaurant", "status": 301 },
+    { "source": "/uk/seminaires-et-receptions.php", "destination": "/seminaires", "status": 301 },
+    { "source": "/uk/situation-et-acces.php", "destination": "/situation-et-acces", "status": 301 },
+    { "source": "/uk/speed-search-texte.php", "destination": "/contact", "status": 301 },
+    { "source": "/uk/tarifs-et-offres-speciales.php", "destination": "/tarifs", "status": 301 },
+
+    { "source": "/mentionslegales_lang-fr.html", "destination": "/mentions-legales", "status": 301 },
+    { "source": "/mentionslegales_lang-uk.html", "destination": "/mentions-legales", "status": 301 },
+    { "source": "/mentionslegales.php", "destination": "/mentions-legales", "status": 301 },
+
+    { "source": "/hotel-restaurant-seminaires-barbizon-seine-et-marne-ile-de-france-plan-du-site.html", "destination": "/plan-du-site", "status": 301 },
+    { "source": "/hotel-restaurant-seminaires-barbizon-seine-et-marne-ile-de-france-plan-du-site.php", "destination": "/plan-du-site", "status": 301 },
+
+    { "source": "/hotels-restaurants-guide.php", "destination": "/", "status": 301 },
+    { "source": "/hotels-restaurants-guide-rc.php", "destination": "/", "status": 301 },
+
+    { "source": "/print/(.*)", "destination": "/", "status": 301 },
+
+    { "source": "/fr/(.*)", "destination": "/", "status": 301 },
+    { "source": "/uk/(.*)", "destination": "/", "status": 301 },
+    { "source": "/jp/(.*)", "destination": "/", "status": 301 },
+    { "source": "/ebrochure/(.*)", "destination": "/galerie", "status": 301 },
+    { "source": "/apicius_plateforme2/(.*)", "destination": "/", "status": 301 }
+  ]
+}

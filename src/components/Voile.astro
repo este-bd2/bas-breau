@@ -1,0 +1,26 @@
+---
+// Voile — bloc d'en-tête de section : sur-titre, titre, texte optionnel.
+interface Props {
+  surtitre?: string;
+  titre: string;
+  texte?: string;
+  centre?: boolean;
+  clair?: boolean;
+  releve?: boolean;
+}
+
+const { surtitre, titre, texte, centre = false, clair = false, releve = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'voile',
+    { 'voile--centre': centre },
+    { 'voile--clair': clair },
+    { releve: releve }
+  ]}
+>
+  {surtitre && <p class:list={['inscription', {'inscription--claire': clair}]}>{surtitre}</p>}
+  <h2>{titre}</h2>
+  {texte && <p class="voile__texte">{texte}</p>}
+</div>

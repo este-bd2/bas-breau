@@ -1,0 +1,195 @@
+/* ============================================================
+   BAS-BRÉAU — complements de pages (histoire, tarifs, restaurant,
+   questions fréquentes, à propos).
+   ============================================================ */
+
+/* ---------- Carnet de bord (histoire) ---------- */
+.carnet {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem 2rem;
+}
+
+@media (min-width: 640px) {
+  .carnet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .carnet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.carnet li {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--ligne);
+  padding-top: 0.55rem;
+}
+
+.carnet__annee {
+  font-family: var(--plume);
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--sienne-profonde);
+  margin-bottom: 0.25rem;
+}
+
+/* ---------- Table des tarifs ---------- */
+.table-tarif {
+  margin: 0 0 1.2rem;
+  overflow-x: auto;
+}
+
+.table-tarif table {
+  border-collapse: collapse;
+  width: 100%;
+  background: var(--veille);
+  border: 1px solid var(--ligne);
+}
+
+.table-tarif th,
+.table-tarif td {
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--ligne);
+  vertical-align: top;
+}
+
+.table-tarif thead th {
+  font-family: var(--antique);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sienne-profonde);
+  background: var(--papier-deux);
+}
+
+.table-tarif tbody th {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.table-tarif tbody tr:last-child th,
+.table-tarif tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.notes-supl {
+  display: grid;
+  gap: 0.6rem;
+}
+
+/* ---------- Bandeau d'état (restaurant) ---------- */
+.bandeau-etat {
+  background: var(--papier-deux);
+  border: 1px dashed var(--sienne);
+  border-radius: var(--rayon-papier);
+  padding: 1rem 1.4rem;
+  margin-bottom: clamp(1.6rem, 4vw, 2.6rem);
+}
+
+.bandeau-etat .inscription {
+  margin: 0;
+}
+
+.paragraphe-libre {
+  max-width: 62ch;
+  display: grid;
+  gap: 1rem;
+}
+
+/* ---------- Questions fréquentes ---------- */
+.questions {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.question {
+  border: 1px solid var(--ligne);
+  background: var(--veille);
+  border-radius: var(--rayon-papier);
+  padding: 0.35rem 0.6rem;
+}
+
+.question summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.75rem 0.7rem;
+  list-style: none;
+}
+
+.question summary::-webkit-details-marker {
+  display: none;
+}
+
+.question summary::after {
+  content: '+';
+  float: right;
+  font-weight: 400;
+  color: var(--sienne);
+}
+
+.question[open] summary::after {
+  content: '−';
+}
+
+.question p {
+  margin: 0;
+  padding: 0 0.9rem 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- Élément hors écran ---------- */
+.visuellement-cache {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* ---------- Coordonnées sur la page accès ---------- */
+.coordees {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 0 0 2rem;
+  background: var(--veille);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon-papier);
+  padding: 1.3rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .coordees {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.coordees dt {
+  font-weight: 700;
+}
+
+.coordees dd {
+  margin: 0.25rem 0 0;
+  color: #57503f;
+}
+
+/* ---------- Erreur du formulaire ---------- */
+.saisie__erreur {
+  border: 1px solid #b4533a;
+  background: #fbe9e2;
+  color: #7c2d12;
+  border-radius: var(--rayon-papier);
+  padding: 0.8rem 1rem;
+  margin: 0;
+  line-height: 1.5;
+}

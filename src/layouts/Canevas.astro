@@ -1,0 +1,52 @@
+---
+// Canevas — gabarit du site : Atlas dans le head, styles communs importés,
+// en-tête, pied, action collante mobile sur les petits écrans.
+import '../styles/atelier.css';
+import '../styles/compositions.css';
+import '../styles/pages.css';
+import '../styles/en-tete.css';
+import '../styles/complements.css';
+import '../styles/plansite.css';
+import Atlas from '../components/Atlas.astro';
+import Chapeau from '../components/Chapeau.astro';
+import Semelle from '../components/Semelle.astro';
+import { etablissement } from '../data/site';
+
+interface Props {
+  titre: string;
+  description: string;
+  chemin: string;
+  schema?: Record<string, unknown>[];
+}
+
+const { titre, description, chemin, schema = [] } = Astro.props;
+const telSansEspace = etablissement.contact.telephonePrincipal.replace(/\s/g, '');
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <Atlas titre={titre} description={description} chemin={chemin} schema={schema} />
+    <slot name="head" />
+  </head>
+  <body>
+    <Chapeau />
+    <main>
+      <slot />
+    </main>
+    <Semelle />
+    <nav class="attache-mobile" aria-label="Actions rapides">
+      <a
+        class="bouton bouton--sienne"
+        href={etablissement.moteurReservation}
+        target="_blank"
+        rel="noopener"
+      >
+        Réserver
+      </a>
+      <a class="bouton" href={`tel:${telSansEspace}`}>
+        Appeler
+      </a>
+    </nav>
+  </body>
+</html>
