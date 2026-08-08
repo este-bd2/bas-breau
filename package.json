@@ -4,6 +4,9 @@
   "private": true,
   "version": "1.0.0",
   "description": "Hôtellerie du Bas-Bréau — site officiel, Barbizon (77). Astro statique, zéro dépendance runtime.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

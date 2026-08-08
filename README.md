@@ -28,3 +28,16 @@ npm run preview  # sert dist/
 - `src/layouts/Canevas.astro` — gabarit (fichier atlas, en-tête, pied).
 
 Le déploiement n'intervient qu'après validation par le client.
+
+## Déploiement Vercel
+
+- **Node.js ≥ 22.12** requis (Astro 7). Vercel sélectionne la version via le
+  champ `engines` de `package.json` ; si le projet affiche un vieux runtime
+  (Node 20), vérifier **Settings → Build and Deployment → Node.js Version**.
+- `vercel.json` fixe explicitement `buildCommand` et `outputDirectory` (`dist`)
+  pour que le build passe même si le framework n'est pas détecté.
+- Variables d'environnement à créer dans le projet (Settings → Environment
+  Variables) : `CONTACT_TO`, `CONTACT_FROM`, `RESEND_API_KEY` — sinon le
+  formulaire redirige vers `/contact` avec le code `config`.
+- Après import, un déploiement de prévisualisation est créé à chaque push sur
+  `main` ; état visible sur l'onglet **Deployments**.
