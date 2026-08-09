@@ -34,8 +34,13 @@ export const etablissement = {
     geocode: { lat: '48.444862055', lon: '2.609713985' } // [S2] coordonnées Insee du siège
   },
 
-  // [S3] l'ancien site annonce 5 étoiles — consigné tel quel (décision client 08/08/2026)
-  etoiles: 5,
+  // [S1] Le site officiel actuel titre « Hôtel 4 étoiles à Barbizon » — dans la balise
+  // <title>, dans son JSON-LD et dans ses mots-clés, page modifiée le 22/07/2026.
+  // Le classement hôtelier est délivré par Atout France, jamais par l'établissement :
+  // afficher une catégorie supérieure à celle obtenue est une pratique commerciale
+  // trompeuse (art. L121-2 du code de la consommation). Les 5 étoiles relevées sur
+  // l'ancien site [S3] ne sont donc pas reprises.
+  etoiles: 4,
 
   contact: {
     adresse: {
@@ -44,7 +49,10 @@ export const etablissement = {
       ville: 'Barbizon',
       pays: 'France'
     }, // [S1] + [S3], identique des deux côtés
-    telephonePrincipal: '+33 1 60 66 40 05', // [S3] ancien site — conservé tel quel (décision client 08/08/2026)
+    // [S1] Numéro publié en tête de chaque page du site officiel actuel :
+    // « (+33)01 64 64 06 24 ». Le 01 60 66 40 05 de l'ancien site [S3] n'est plus
+    // diffusé par l'établissement — le reprendre enverrait les appels dans le vide.
+    telephonePrincipal: '+33 1 64 64 06 24',
     // [À CONFIRMER] basbreau@wanadoo.fr (ancien site [S3], carte de visite) — non retenu en affichage : l'adresse officielle actuelle a été préférée
     email: 'contact@hotelleriedubasbreau.com', // [S1] contact/réservation officiels
     reseaux: {

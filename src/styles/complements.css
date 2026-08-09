@@ -183,8 +183,13 @@
   color: #57503f;
 }
 
-/* ---------- Erreur du formulaire ---------- */
+/* ---------- Erreur du formulaire ----------
+   Les trois messages sont présents dans la page mais masqués. La fonction
+   serverless renvoie vers /contact#erreur-…, et :target révèle le bon.
+   Tout se joue en CSS : le message s'affiche même si le JavaScript échoue,
+   et rien de la saisie ne transite par l'URL. */
 .saisie__erreur {
+  display: none;
   border: 1px solid #b4533a;
   background: #fbe9e2;
   color: #7c2d12;
@@ -192,4 +197,16 @@
   padding: 0.8rem 1rem;
   margin: 0;
   line-height: 1.5;
+  scroll-margin-top: 6rem;
+}
+
+.saisie__erreur:target {
+  display: block;
+}
+
+.saisie__erreur a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }

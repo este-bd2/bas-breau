@@ -11,7 +11,6 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check:collisions": "node scripts/collision-detect.mjs",
     "check:liens": "node scripts/links-check.mjs"
   },
   "dependencies": {

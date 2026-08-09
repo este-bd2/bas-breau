@@ -8,14 +8,30 @@ import Appel from '../components/Appel.astro';
 import { FORMULAIRE, FAQ } from '../data/contact';
 import { etablissement } from '../data/site';
 
-const { erreur } = Astro.props;
-
-const messagesErreur: Record<string, string> = {
-  validation: 'Le message n’a pas pu partir : vérifiez votre adresse e-mail, le message et la case de consentement.',
-  config: 'L’envoi est momentanément indisponible — merci d’appeler directement la maison.',
-  envoi: 'L’envoi n’a pas abouti. Retentez, ou appelez la réception au téléphone de l’hôtel.',
-  autre: 'L’envoi n’a pas abouti — merci de réessayer.'
-};
+// Les trois motifs d'échec renvoyés par api/contact.mjs. Ils sont tous rendus
+// dans la page, masqués, et révélés par :target. Une page statique ne peut pas
+// lire Astro.props — qui reste vide au prérendu, et laissait donc le visiteur
+// devant un formulaire vide sans la moindre explication.
+const ERREURS = [
+  {
+    code: 'validation',
+    texte:
+      'Le message n’a pas pu partir : vérifiez votre adresse e-mail, le message et la case de consentement.',
+    appel: false
+  },
+  {
+    code: 'config',
+    texte:
+      'L’envoi est momentanément indisponible et votre demande n’a pas été transmise. Merci d’appeler directement la maison au',
+    appel: true
+  },
+  {
+    code: 'envoi',
+    texte:
+      'L’envoi n’a pas abouti et votre demande n’a pas été transmise. Retentez, ou appelez la réception au',
+    appel: true
+  }
+] as const;
 
 const telephones = etablissement.contact.telephonePrincipal;
 
@@ -81,11 +97,14 @@ const schema = [
             </label>
           </p>
 
-          {erreur && (
-            <p class="saisie__erreur" role="alert">
-              {messagesErreur[erreur] || messagesErreur.autre}
+          {ERREURS.map((e) => (
+            <p class="saisie__erreur" id={`erreur-${e.code}`} role="alert">
+              {e.texte}
+              {e.appel && (
+                <> <a href={`tel:${telephones.replace(/\s/g, '')}`}>{telephones}</a>.</>
+              )}
             </p>
-          )}
+          ))}
 
           <label class="saisie__champ">
             <span>Nom</span>
@@ -145,7 +164,7 @@ const schema = [
 
     <Appel
       titre="Traiter avec la maison"
-      texte="Pour une réservation immédiate, le moteur officel est le plus rapide."
+      texte="Pour une réservation immédiate, le moteur officiel est le plus rapide."
       bouton={{
         libelle: 'Réserver en ligne',
         href: etablissement.moteurReservation,
@@ -154,3 +173,41 @@ const schema = [
     />
   </div>
 </Canevas>
+
+<script>
+  /* Conservation de la saisie en cas d'échec d'envoi.
+     sessionStorage reste dans le navigateur du visiteur : rien ne part dans
+     l'URL, rien n'entre dans les journaux du serveur, rien ne fuit par l'en-tête
+     Referer. Sans JavaScript le formulaire fonctionne quand même — seule la
+     restitution du texte est perdue, jamais l'envoi ni le message d'erreur. */
+  const form = document.querySelector('form.saisie');
+  if (form instanceof HTMLFormElement) {
+    const CLE = 'bas-breau:contact';
+    const champs = ['nom', 'email', 'telephone', 'motif', 'message'];
+
+    form.addEventListener('submit', () => {
+      const donnees = {};
+      for (const nom of champs) {
+        const champ = form.elements.namedItem(nom);
+        if (champ && 'value' in champ) donnees[nom] = champ.value;
+      }
+      try {
+        sessionStorage.setItem(CLE, JSON.stringify(donnees));
+      } catch {}
+    });
+
+    if (location.hash.startsWith('#erreur-')) {
+      try {
+        const donnees = JSON.parse(sessionStorage.getItem(CLE) || '{}');
+        for (const [nom, valeur] of Object.entries(donnees)) {
+          const champ = form.elements.namedItem(nom);
+          if (champ && 'value' in champ && valeur) champ.value = valeur;
+        }
+      } catch {}
+    } else {
+      try {
+        sessionStorage.removeItem(CLE);
+      } catch {}
+    }
+  }
+</script>

@@ -1,4 +1,4 @@
-// Contact & Envoi — function serverless Vercel (api/contact.mjs).
+// Contact & Envoi — fonction serverless Vercel (api/contact.mjs).
 //
 // Règles respectées :
 //  - Destinataires pilotés par la variable d'environnement CONTACT_TO
@@ -8,9 +8,15 @@
 //  - Zéro dépendance npm : fetch natif vers l'API Resend.
 //  - Fonctionne sans JavaScript : POST ordinaire de la page, réponse HTTP 303.
 //  - Anti-spam : champ leurre « chambres_detail » caché, pas de captcha.
-//  - Échec : jamais de faux « merci » — retours vers /contact avec le texte
-//    conservé, numéro de téléphone affiché, mailto: pré-rempli, et cause
-//    journalosrviée dans les logs serveur.
+//  - Échec : jamais de faux « merci ». Le visiteur revient sur /contact avec un
+//    fragment d'erreur, la page affiche le motif et propose le téléphone.
+//
+// La saisie du visiteur ne repart JAMAIS dans l'URL. Un nom, un téléphone ou le
+// détail d'une demande privée écrits en query string atterrissent dans
+// l'historique du navigateur, dans les journaux du serveur et dans l'en-tête
+// Referer envoyé aux tiers. Le fragment (#) reste, lui, côté navigateur : il
+// n'est jamais transmis au serveur. Le texte saisi est restitué par la page
+// elle-même depuis sessionStorage.
 
 const COURRIEL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -18,17 +24,7 @@ function rediriger(vers) {
   return new Response(null, { status: 303, headers: { Location: vers } });
 }
 
-function conserve(params, erreur) {
-  const q = new URLSearchParams();
-  q.set('erreur', erreur);
-  for (const cle of ['nom', 'email', 'telephone', 'motif', 'message']) {
-    const valeur = (params.get(cle) || '').trim();
-    if (valeur) {
-      q.set(cle, valeur);
-    }
-  }
-  return q;
-}
+const echec = (motif) => rediriger(`/contact#erreur-${motif}`);
 
 export async function POST(request) {
   const corps = await request.text();
@@ -48,16 +44,19 @@ export async function POST(request) {
   const consentement = (envoye.get('consentement') || '') === 'oui';
 
   if (!message || !email || !COURRIEL.test(email) || !consentement) {
-    const q = conserve(envoye, 'validation');
-    return rediriger('/contact?' + q.toString());
+    return echec('validation');
   }
 
+  const cle = process.env.RESEND_API_KEY;
   const destination = process.env.CONTACT_TO;
   const expediteur = process.env.CONTACT_FROM;
-  if (!destination || !expediteur) {
-    console.error('[contact] CONTACT_TO ou CONTACT_FROM manquants');
-    const q = conserve(envoye, 'config');
-    return rediriger('/contact?' + q.toString());
+
+  // La clé était absente de ce contrôle : sans elle, l'appel partait quand même
+  // avec « Bearer undefined », Resend répondait 401, et le visiteur lisait
+  // « l'envoi n'a pas abouti » au lieu de « service indisponible ».
+  if (!cle || !destination || !expediteur) {
+    console.error('[contact] RESEND_API_KEY, CONTACT_TO ou CONTACT_FROM manquante');
+    return echec('config');
   }
 
   const destinataires = destination
@@ -67,8 +66,7 @@ export async function POST(request) {
 
   if (destinataires.length === 0) {
     console.error('[contact] CONTACT_TO invalide');
-    const q = conserve(envoye, 'config');
-    return rediriger('/contact?' + q.toString());
+    return echec('config');
   }
 
   const messagerie =
@@ -82,7 +80,7 @@ export async function POST(request) {
     const reponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        Authorization: `Bearer ${cle}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -97,15 +95,13 @@ export async function POST(request) {
     if (!reponse.ok) {
       const detail = (await reponse.text()).slice(0, 300);
       console.error(`[contact] Resend ${reponse.status} : ${detail}`);
-      const q = conserve(envoye, 'envoi');
-      return rediriger('/contact?' + q.toString());
+      return echec('envoi');
     }
 
     console.info('[contact] envoyé à', destinataires.join(', '));
     return rediriger('/merci?etat=ok');
   } catch (cause) {
     console.error('[contact] exception :', cause);
-    const q = conserve(envoye, 'envoi');
-    return rediriger('/contact?' + q.toString());
+    return echec('envoi');
   }
 }

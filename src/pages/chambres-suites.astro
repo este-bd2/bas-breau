@@ -48,7 +48,7 @@ const schema = [
         texte="Descriptions, surfaces et équipements publiés par l’établissement sur son site officiel. Les prix sont ceux du jour du relevé (08/08/2026), à partir de."
       />
       <p class="rang">
-        <Etoiles /> Hôtel classé cinq étoiles par l’établissement.
+        <Etoiles /> Hôtel classé {etablissement.etoiles} étoiles.
       </p>
       <div class="chambres-liste">
         {chambres.map((c) => (
