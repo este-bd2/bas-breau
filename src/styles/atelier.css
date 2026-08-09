@@ -68,6 +68,21 @@ picture {
   display: contents;
 }
 
+/* Une adresse e-mail, une URL de réservation ou un identifiant long sont
+   insécables : le texte débordait de sa boîte sans que le rectangle de celle-ci
+   ne bouge, et la page partait en défilement horizontal sous 400 px — sans
+   qu'aucun élément ne paraisse fautif à la mesure. On autorise la coupure quand
+   il n'y a pas d'autre solution ; les mots ordinaires ne sont pas touchés. */
+body {
+  overflow-wrap: break-word;
+}
+
+a,
+dd,
+code {
+  overflow-wrap: anywhere;
+}
+
 h1,
 h2,
 h3,

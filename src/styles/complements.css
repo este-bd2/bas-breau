@@ -159,7 +159,9 @@
 /* ---------- Coordonnées sur la page accès ---------- */
 .coordees {
   display: grid;
-  grid-template-columns: 1fr;
+  /* Une adresse e-mail longue est insécable : avec `1fr`, elle imposait sa
+     largeur à la colonne et le bloc débordait de l'écran sous 360 px. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   margin: 0 0 2rem;
   background: var(--veille);
@@ -170,7 +172,7 @@
 
 @media (min-width: 640px) {
   .coordees {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 

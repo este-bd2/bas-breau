@@ -163,13 +163,17 @@
 .duo {
   display: grid;
   gap: clamp(1.8rem, 6vw, 4rem);
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
+}
+
+.duo > * {
+  min-width: 0;
 }
 
 @media (min-width: 860px) {
   .duo {
-    grid-template-columns: 1fr 1.1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   }
 
   .duo--inverse .duo__image {
@@ -387,13 +391,22 @@
 .casier-chambre {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 1fr;
+  /* `1fr` seul ne suffit pas : la piste vaut `minmax(auto, 1fr)`, et le minimum
+     automatique se cale sur la largeur minimale du contenu — 352 px ici. Les
+     fiches sortaient donc de l'écran sur un mobile de 320 px, sans que rien ne
+     permette de les faire défiler : la partie droite était simplement rognée. */
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   margin-bottom: 2rem;
+}
+
+.casier-chambre > * {
+  min-width: 0;
 }
 
 @media (min-width: 860px) {
   .casier-chambre {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
   }
 }
@@ -408,11 +421,19 @@
 .casier-chambre__entete {
   display: flex;
   justify-content: space-between;
+  /* Le titre et le prix — ce dernier en `white-space: nowrap` — ne tiennent pas
+     côte à côte sous 360 px : la ligne débordait et le prix sortait de l'écran.
+     On l'autorise à passer dessous, et le titre à se comprimer. */
+  flex-wrap: wrap;
   gap: 1rem;
   align-items: baseline;
   border-bottom: 1px solid var(--ligne);
   padding-bottom: 0.8rem;
   margin-bottom: 1rem;
+}
+
+.casier-chambre__entete > * {
+  min-width: 0;
 }
 
 /* ---------- Chiffres réels ---------- */
@@ -506,6 +527,11 @@
 
 .chambres-liste {
   display: grid;
+  /* Un élément de grille a `min-width: auto` : il refuse de descendre sous la
+     largeur minimale de son contenu. La colonne se calait donc sur 378 px et les
+     fiches dépassaient de leur conteneur sur un écran de 375 px. `minmax(0, 1fr)`
+     autorise la colonne à rétrécir jusqu'à la largeur réelle disponible. */
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(3rem, 9vw, 5.5rem);
 }
 .temoignage figcaption {

@@ -201,7 +201,20 @@
   opacity: 1;
 }
 
-/* Voile d'atelier qui passe sur la photographie (surbrillance) */
+/* Voile d'atelier qui passe sur la photographie (surbrillance).
+   Les trois conteneurs doivent être positionnés ET rognés. Sans
+   `position: relative`, le `inset: -30% -60%` du pseudo-élément se résolvait sur
+   le bloc conteneur initial : 60 % de la largeur de la fenêtre débordaient de
+   chaque côté. Le voile sortait de 451 px à droite et la page partait en
+   défilement horizontal sur galerie, restaurant et séminaires. `overflow: hidden`
+   garde le balayage sur la photographie, ce qui est son seul objet. */
+.officine__image,
+.casier-chambre__image,
+.galerie figure {
+  position: relative;
+  overflow: hidden;
+}
+
 .officine__image::before,
 .casier-chambre__image::before,
 .galerie figure::before {

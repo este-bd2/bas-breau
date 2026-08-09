@@ -214,11 +214,20 @@
   display: none;
 }
 
+/* Un enfant en `position: absolute` échappe au masquage que <details> applique
+   à son contenu replié : le volet restait donc dessiné, menu fermé, et élargissait
+   le document de plusieurs centaines de pixels — la page partait en défilement
+   horizontal sur mobile et sur tablette. Il lui faut un état fermé explicite. */
+.nav-mobile:not([open]) .nav-mobile__volet {
+  display: none;
+}
+
 .nav-mobile__volet {
   position: absolute;
   top: calc(100% + 0.6rem);
   right: 0;
   min-width: 250px;
+  max-width: min(250px, calc(100vw - 2rem));
   background: var(--veille);
   border: 1px solid var(--ligne);
   padding: 0.75rem;
@@ -343,7 +352,11 @@
   right: clamp(0.6rem, 3vw, 1.2rem);
   bottom: clamp(0.6rem, 3vw, 1.2rem);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* `1fr` vaut `minmax(auto, 1fr)` : les deux boutons refusaient de descendre
+     sous leur largeur de contenu, 161 px chacun, et la barre atteignait 350 px
+     sur un écran de 320. Le bouton « Appeler » sortait de l'écran — sur un site
+     d'hôtel, c'est l'action la plus importante du mobile. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.6rem;
   padding: 0.55rem;
   border: 1px solid var(--ligne);
@@ -356,6 +369,12 @@
 .attache-mobile .bouton {
   margin: 0;
   text-align: center;
+  /* `minmax(0, 1fr)` autorise la piste à rétrécir, mais l'élément garde
+     `min-width: auto` et refuse de descendre sous son contenu : les deux boutons
+     imposaient 166 px chacun et la barre atteignait 361 px sur un écran de 320. */
+  min-width: 0;
+  padding-inline: 0.6rem;
+  overflow-wrap: anywhere;
 }
 
 @media (min-width: 900px) {
